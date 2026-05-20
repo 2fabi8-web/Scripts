@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedQuiz – Interaktives Lernquiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Setup Screen -->
+    <div id="screen-setup" class="screen active">
+        <div class="container">
+            <div class="app-header">
+                <div class="logo">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="10" fill="#1a5f7a"/>
+                        <path d="M20 8v24M8 20h24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                    <span>MedQuiz</span>
+                </div>
+                <p class="app-subtitle">Interaktives Lernquiz für deine medizinische Ausbildung</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    API-Schlüssel
+                </div>
+                <p class="card-hint">Dein Anthropic API-Schlüssel wird nur lokal in deinem Browser gespeichert.</p>
+                <div class="input-row">
+                    <input type="password" id="api-key" class="text-input" placeholder="sk-ant-api03-..." autocomplete="off" />
+                    <button class="btn-icon" id="toggle-api-key" title="Anzeigen/Verbergen">
+                        <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="save-key" />
+                    <span>API-Schlüssel im Browser speichern</span>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Lernmaterial hochladen
+                </div>
+                <div class="upload-zone" id="upload-zone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <p>PDF-Datei hier ablegen</p>
+                    <span>oder klicken zum Auswählen</span>
+                    <input type="file" id="file-input" accept=".pdf" />
+                </div>
+                <div id="file-info" class="file-info hidden">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span id="file-name"></span>
+                    <button class="btn-remove" id="remove-file" title="Entfernen">✕</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                    Quiz-Einstellungen
+                </div>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="question-count">Anzahl der Fragen</label>
+                        <select id="question-count" class="select-input">
+                            <option value="5">5 Fragen</option>
+                            <option value="10" selected>10 Fragen</option>
+                            <option value="15">15 Fragen</option>
+                            <option value="20">20 Fragen</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="difficulty">Schwierigkeitsgrad</label>
+                        <select id="difficulty" class="select-input">
+                            <option value="leicht">Leicht – Grundlagen</option>
+                            <option value="mittel" selected>Mittel – Fortgeschritten</option>
+                            <option value="schwer">Schwer – Expertenwissen</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="focus-area">Themenfokus (optional)</label>
+                        <input type="text" id="focus-area" class="text-input" placeholder="z.B. Herzkreislauf, Skelett..." />
+                    </div>
+                    <div class="setting-item">
+                        <label for="language">Sprache der Fragen</label>
+                        <select id="language" class="select-input">
+                            <option value="Deutsch" selected>Deutsch</option>
+                            <option value="Englisch">Englisch</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary btn-large" id="start-btn" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                Quiz starten
+            </button>
+            <p id="start-error" class="error-msg hidden"></p>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="screen-loading" class="screen">
+        <div class="container center">
+            <div class="loading-card">
+                <div class="pulse-ring"></div>
+                <div class="loading-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="10" fill="#1a5f7a"/>
+                        <path d="M20 8v24M8 20h24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h2>Fragen werden generiert…</h2>
+                <p id="loading-status">PDF wird eingelesen</p>
+                <div class="progress-track">
+                    <div class="progress-fill" id="loading-progress" style="width: 0%"></div>
+                </div>
+                <p class="loading-hint">Die KI analysiert dein Dokument und erstellt individuelle Fragen</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="screen-quiz" class="screen">
+        <div class="container">
+            <div class="quiz-topbar">
+                <div class="quiz-meta">
+                    <span id="question-counter">Frage 1 von 10</span>
+                    <span class="score-badge" id="score-display">0 Punkte</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="quiz-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="card question-card">
+                <span class="type-badge" id="question-type-badge">Multiple Choice</span>
+                <p class="question-text" id="question-text"></p>
+                <div id="answer-area" class="answer-area"></div>
+                <div id="feedback-area" class="feedback-area hidden"></div>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="btn-primary" id="submit-btn">
+                    Antwort prüfen
+                </button>
+                <button class="btn-secondary hidden" id="next-btn">
+                    Nächste Frage
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="screen-results" class="screen">
+        <div class="container">
+            <div class="results-hero">
+                <div id="trophy-icon" class="trophy">🎓</div>
+                <h1>Quiz abgeschlossen!</h1>
+                <div class="score-ring">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="52" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+                        <circle cx="60" cy="60" r="52" fill="none" stroke="#1a5f7a" stroke-width="10"
+                            stroke-dasharray="326.7"
+                            stroke-dashoffset="326.7"
+                            stroke-linecap="round"
+                            transform="rotate(-90 60 60)"
+                            id="score-ring-fill"/>
+                    </svg>
+                    <div class="score-ring-text">
+                        <span id="score-percent">0%</span>
+                    </div>
+                </div>
+                <p id="score-message" class="score-message"></p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Zusammenfassung</div>
+                <div class="stats-row">
+                    <div class="stat-item correct">
+                        <div class="stat-val" id="correct-count">0</div>
+                        <div class="stat-lbl">Richtig</div>
+                    </div>
+                    <div class="stat-item wrong">
+                        <div class="stat-val" id="wrong-count">0</div>
+                        <div class="stat-lbl">Falsch</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val" id="total-count">0</div>
+                        <div class="stat-lbl">Gesamt</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Alle Fragen im Überblick</div>
+                <div id="results-detail" class="results-detail"></div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn-primary" id="restart-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+                    Neues Dokument laden
+                </button>
+                <button class="btn-secondary" id="retry-btn">
+                    Gleiche Fragen wiederholen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
