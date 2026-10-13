@@ -1,0 +1,4 @@
+bin/
+obj/
+engine/UxPlay/
+engine/*.log
