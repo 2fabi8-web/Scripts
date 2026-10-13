@@ -18,6 +18,8 @@ public sealed class AppSettings
     public string VideoSink { get; set; } = "d3d11videosink";
     public string Pin { get; set; } = "";
     public bool AllowTakeover { get; set; } = true;
+    /// <summary>-vsync no: Bild sofort anzeigen statt mit dem Ton zu synchronisieren (Mac als 2. Bildschirm).</summary>
+    public bool LowLatency { get; set; } = true;
     public string ExtraArgs { get; set; } = "";
     public string UxPlayPath { get; set; } = "";
     public bool AutoStartServer { get; set; } = true;

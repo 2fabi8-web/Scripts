@@ -63,6 +63,7 @@ public partial class MainWindow : Window
         AudioCheck.IsChecked = _s.Audio;
         H265Check.IsChecked = _s.H265;
         TakeoverCheck.IsChecked = _s.AllowTakeover;
+        LowLatencyCheck.IsChecked = _s.LowLatency;
         PinBox.Text = _s.Pin;
         AutostartCheck.IsChecked = _s.StartWithWindows;
         AutoServerCheck.IsChecked = _s.AutoStartServer;
@@ -259,6 +260,7 @@ public partial class MainWindow : Window
         _s.Audio = AudioCheck.IsChecked == true;
         _s.H265 = H265Check.IsChecked == true;
         _s.AllowTakeover = TakeoverCheck.IsChecked == true;
+        _s.LowLatency = LowLatencyCheck.IsChecked == true;
         _s.Pin = new string(PinBox.Text.Where(char.IsDigit).ToArray());
         _s.ExtraArgs = ExtraArgsBox.Text;
         _s.AutoStartServer = AutoServerCheck.IsChecked == true;

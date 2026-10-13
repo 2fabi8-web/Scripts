@@ -68,6 +68,7 @@
           <ComboBox x:Name="SinkBox" SelectionChanged="Setting_Changed"/>
 
           <CheckBox x:Name="FullscreenCheck" Content="Vollbild auf dem gewählten Monitor" Margin="0,14,0,6" Click="Setting_Changed"/>
+          <CheckBox x:Name="LowLatencyCheck" Content="Niedrige Latenz (für 2. Bildschirm; Ton evtl. leicht versetzt)" Click="Setting_Changed"/>
           <CheckBox x:Name="TopmostCheck" Content="Immer im Vordergrund" Click="Setting_Changed"/>
           <CheckBox x:Name="AudioCheck" Content="Ton über den PC ausgeben" Click="Setting_Changed"/>
           <CheckBox x:Name="H265Check" Content="H.265 / 4K erlauben (neuere iPads)" Click="Setting_Changed"/>

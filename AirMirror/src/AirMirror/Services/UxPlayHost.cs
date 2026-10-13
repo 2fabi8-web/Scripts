@@ -44,6 +44,7 @@ public sealed class UxPlayHost : IDisposable
         a.Add("-as"); a.Add(s.Audio ? "wasapisink" : "0");
         if (s.H265) a.Add("-h265");
         if (s.AllowTakeover) a.Add("-nohold");
+        if (s.LowLatency) { a.Add("-vsync"); a.Add("no"); }
         if (!string.IsNullOrWhiteSpace(s.Pin)) { a.Add("-pin"); a.Add(s.Pin.Trim()); }
         if (!string.IsNullOrWhiteSpace(s.ExtraArgs)) a.Add(s.ExtraArgs.Trim());
         return string.Join(' ', a);

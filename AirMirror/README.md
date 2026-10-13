@@ -38,4 +38,8 @@ AirMirror/
 
 - Fenster schließen → App läuft im Tray weiter; Beenden über Rechtsklick aufs Tray-Symbol
 - Vollbild: Schalter in der App oder Tray-Menü „Vollbild umschalten“
+- Mac als zweiter Bildschirm: am Mac Bildschirmsynchronisierung → „AirMirror“ → „Als separaten Bildschirm verwenden“.
+  „Niedrige Latenz“ (`-vsync no`, Standard: an) verhindert die hohe Verzögerung durch die Audio/Video-Synchronisation;
+  zum Video-Schauen mit exaktem Lippensync ausschalten.
+- iPad: AirPlay kann unter iPadOS nur spiegeln, ein erweiterter Bildschirm (Stage Manager) geht nur per Kabel.
 - Bildstörungen/Absturz bei Nvidia: Video-Ausgabe auf „Direct3D 11“ bzw. „OpenGL“ umstellen
